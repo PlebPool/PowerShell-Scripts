@@ -1,7 +1,14 @@
-﻿param(
-    $portSQL,
-    $portHADR
-)
+﻿$portSQL = Read-Host "SQL port"
+
+$portHADR = Read-Host "HADR port"
+
+Write-Host "Are you using SQLPS.exe to run this command?"
+
+$confirm = Read-Host "y/N"
+
+if (($confirm -ne "Y") -or ($confirm -ne "y")) {
+    exit
+}
 
 # Script assumes SQL server is on this instance and has default name.
 
@@ -31,5 +38,6 @@ Enable-SqlAlwaysOn -ServerInstance (get-item env:\computername).Value
 
 ### Fire Wall Configurations ###
 
-New-NetFirewallRule -DisplayName "SQL TCP Inbound Port $portSQL" -Direction Inbound -LocalPort $portSQL -Protocol TCP -Action Allow -Enabled True -Profile Domain
-New-NetFirewallRule -DisplayName "SQL TCP Inbound Port $portHADR" -Direction Inbound -LocalPort $portHADR -Protocol TCP -Action Allow -Enabled True -Profile Domain
+New-NetFirewallRule -DisplayName "SQL TCP Inbound Port $portSQL" -Group "MAWE" -Direction Inbound -LocalPort $portSQL -Protocol TCP -Action Allow -Enabled True -Profile Domain
+New-NetFirewallRule -DisplayName "SQL TCP Inbound Port $portHADR" -Group "MAWE" -Direction Inbound -LocalPort $portHADR -Protocol TCP -Action Allow -Enabled True -Profile Domain
+New-NetFirewallRule -DisplayName "SQL TCP Inbound Port 445" -Group "MAWE" -Direction Inbound -LocalPort 445 -Protocol TCP -Action Allow -Enabled True -Profile Domain

@@ -1,0 +1,1 @@
+﻿New-NetFirewallRule -DisplayName "HTTP/HTTPS (TCP)" -Enabled True -Group "MAWE" -Protocol TCP -Action Allow -Profile Domain -Direction Inbound -LocalPort 80,443
