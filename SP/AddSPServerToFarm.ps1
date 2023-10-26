@@ -2,7 +2,8 @@
 
 exit
 
-Connect-SPConfigurationDatabase -DatabaseServer SQL01 -DatabaseName SharePoint_Config -LocalServerRole ApplicationWithSearch -Verbose
+#Application ApplicationWithSearch Custom DistributedCache Invalid Search SingleServer SingleServerFarm WebFrontEnd WebFrontEndWithDistributedCache 
+Connect-SPConfigurationDatabase -DatabaseServer SQL01 -DatabaseName SharePoint_Config -LocalServerRole gergwergr -Verbose
 Update-SPFlightsConfigFile -FilePath "C:\Program Files\Common Files\microsoft shared\Web Server Extensions\16\CONFIG\SPFlightRawConfig.json" -Verbose
 
 Install-SPHelpCollection -All -Verbose

@@ -1,0 +1,2 @@
+﻿New-NetFirewallRule -DisplayName "Failover cluster" -Group MAWE -Protocol TCP -LocalPort 3343 -Profile Domain
+New-NetFirewallRule -DisplayName "Failover cluster" -Group MAWE -Protocol UDP -LocalPort 3343 -Profile Domain

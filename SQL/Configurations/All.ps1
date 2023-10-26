@@ -1,4 +1,6 @@
-﻿$portSQL = Read-Host "SQL port"
+﻿# .\SETUP.EXE /Q /IACCEPTSQLSERVERLICENSETERMS /ACTION=Install /FEATURES=SQLENGINE /INSTANCENAME=MSSQLSERVER /SQLSVCACCOUNT="HARDCORE\sql_service" /SQLSVCPASSWORD="Test123" /SQLSYSADMINACCOUNTS="HARDCORE\Administrator" /AGTSVCACCOUNT="HARDCORE\sql_service" /AGTSVCPASSWORD="Test123" /TCPENABLED=1 /USEMICROSOFTUPDATE /INDICATEPROGRESS
+
+$portSQL = Read-Host "SQL port"
 
 $portHADR = Read-Host "HADR port"
 
@@ -38,6 +40,18 @@ Enable-SqlAlwaysOn -ServerInstance (get-item env:\computername).Value
 
 ### Fire Wall Configurations ###
 
-New-NetFirewallRule -DisplayName "SQL TCP Inbound Port $portSQL" -Group "MAWE" -Direction Inbound -LocalPort $portSQL -Protocol TCP -Action Allow -Enabled True -Profile Domain
-New-NetFirewallRule -DisplayName "SQL TCP Inbound Port $portHADR" -Group "MAWE" -Direction Inbound -LocalPort $portHADR -Protocol TCP -Action Allow -Enabled True -Profile Domain
-New-NetFirewallRule -DisplayName "SQL TCP Inbound Port 445" -Group "MAWE" -Direction Inbound -LocalPort 445 -Protocol TCP -Action Allow -Enabled True -Profile Domain
+New-NetFirewallRule -DisplayName "SQL TCP Inbound Port $portSQL" -Group "SQL" -Direction Inbound -LocalPort $portSQL -Protocol TCP -Action Allow -Enabled True -Profile Domain
+New-NetFirewallRule -DisplayName "SQL TCP Inbound Port $portHADR" -Group "SQL" -Direction Inbound -LocalPort $portHADR -Protocol TCP -Action Allow -Enabled True -Profile Domain
+New-NetFirewallRule -DisplayName "SQL TCP Inbound Port 445" -Group "SQL" -Direction Inbound -LocalPort 445 -Protocol TCP -Action Allow -Enabled True -Profile Domain
+
+exit ################################################################################################################################################################################
+
+New-NetFirewallRule -DisplayName "SQL TCP Inbound Port 1433" -Group "SQL" -Direction Inbound -LocalPort 1433 -Protocol TCP -Action Allow -Enabled True -Profile Domain
+New-NetFirewallRule -DisplayName "SQL TCP Inbound Port 5022" -Group "SQL" -Direction Inbound -LocalPort 5022 -Protocol TCP -Action Allow -Enabled True -Profile Domain
+New-NetFirewallRule -DisplayName "SQL TCP Inbound Port 445" -Group "SQL" -Direction Inbound -LocalPort 445 -Protocol TCP -Action Allow -Enabled True -Profile Domain
+
+exit
+
+New-NetFirewallRule -DisplayName "SQL TCP Inbound Port 1433L" -Group "SQL" -Direction Inbound -LocalPort 1433 -Protocol TCP -Action Allow -Enabled True -Profile Any
+New-NetFirewallRule -DisplayName "SQL TCP Inbound Port 5022" -Group "SQL" -Direction Inbound -LocalPort 5022 -Protocol TCP -Action Allow -Enabled True -Profile Any
+New-NetFirewallRule -DisplayName "SQL TCP Inbound Port 445" -Group "SQL" -Direction Inbound -LocalPort 445 -Protocol TCP -Action Allow -Enabled True -Profile Any

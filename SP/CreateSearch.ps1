@@ -9,7 +9,6 @@ $searchServerName = (Get-ChildItem env:computername).value
 $serviceAppName = "Search Service Application"
 $searchDBName = "SearchService_DB"
 
-
 # Grab the Appplication Pool for Service Application Endpoint
 $saAppPool = Get-SPServiceApplicationPool $saAppPoolName
 
@@ -34,6 +33,5 @@ New-SPEnterpriseSearchCrawlComponent -SearchTopology $clone -SearchServiceInstan
 New-SPEnterpriseSearchIndexComponent -SearchTopology $clone -SearchServiceInstance $searchServiceInstance
 New-SPEnterpriseSearchQueryProcessingComponent -SearchTopology $clone -SearchServiceInstance $searchServiceInstance
 $clone.Activate()
-
 
 Write-Host "Search Done!"
